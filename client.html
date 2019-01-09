@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+    <style>
+        body {
+            background: #eeeeee;
+        }
+
+        .container {
+            background: white;
+        }
+
+        .thumbnail {
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="container border border-dark mt-5 p-3">
+    <div class="media pt-3">
+        <div class="media-body">
+            <div class="card">
+                <div class="card-header">
+                    Индивидуальный предприниматель
+                </div>
+                <div class="card-body">
+                    <div id="client-name" class="row">
+                        <div class="col">
+                            ФИО:
+                        </div>
+                        <div class="col-10 value">
+                            Фамилия Имя Отчество
+                        </div>
+                    </div>
+                    <div id="client-phone" class="row">
+                        <div class="col">
+                            Телефон:
+                        </div>
+                        <div class="col-10 value">
+                            +7 (999) 999-99-99
+                        </div>
+                    </div>
+                    <div id="client-email" class="row">
+                        <div class="col">
+                            Почта:
+                        </div>
+                        <div class="col-10 value">
+                            example@example.com
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img class="ml-3 mt-3" width="128" height="128" src="image/avatar.png" alt="Generic placeholder image">
+    </div>
+
+    <div class="pt-3 mt-3 border-bottom border-top">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-pay" role="tab"
+                   aria-controls="pills-home" aria-selected="true">Заплатить</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-create-payment" role="tab"
+                   aria-controls="pills-profile" aria-selected="false">Запросить платеж</a>
+            </li>
+        </ul>
+    </div>
+    <div class="mt-3 tab-content border-bottom pb-3" id="pills-tabContent">
+        <div class="tab-pane fade show active mx-auto" id="pills-pay" role="tabpanel" aria-labelledby="pills-home-tab">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-any-bank"
+                       role="tab" aria-controls="nav-home" aria-selected="true">
+                        С карты любого банка
+                    </a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-own-bank" role="tab"
+                       aria-controls="nav-profile" aria-selected="false">
+                        Из своего интренет-банка
+                    </a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-any-bank" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <form>
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="card border-dark mt-5 mb-3" style="max-width: 18rem;">
+                                    <div class="card-body text-dark">
+                                        <div class="form-row align-items-center mt-3">
+                                            <input type="text" class="form-control" placeholder="Номер карты">
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="мм/гг">
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="CVC">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md mt-3">
+
+                                <div class="form-row align-items-center mt-3">
+                                    <div class="col-3">
+                                        Сумма:
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="number" class="form-control" placeholder="Введите сумму">
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mt-3">
+                                    <div class="col-3">
+                                        Комментарий:
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text" class="form-control" placeholder="Введите комментарий">
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mt-3">
+                                    <div class="col-3">
+                                        Почта:
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="email" class="form-control" placeholder="Почта">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-3">Заплатить</button>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="nav-own-bank" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <form>
+                        <div class="m-3">
+                            <div class="row mt-3">
+                                <div class="col">
+                                    От кого:
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control" placeholder="ИНН">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    БИК:
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control" placeholder="БИК">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    Номер счета:
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control" placeholder="Номер счета">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    За что:
+                                </div>
+                                <div class="col-10">
+                                    <select class="form-control">
+                                        <option selected>Без НДС</option>
+                                        <option>НДС 18%</option>
+                                        <option>НДС 10%</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    Сколько:
+                                </div>
+                                <div class="col-10">
+                                    <input type="number" class="form-control" placeholder="Введите сумму">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Получить файл для интернет-банка</button>
+                        <button class="btn btn-info mt-3">Очистить форму</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-create-payment" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <form>
+                <div class="m-3">
+                    <div class="row mt-3">
+                        <div class="col">
+                            ИНН получателя:
+                        </div>
+                        <div class="col-10">
+                            <input type="text" class="form-control" placeholder="ИНН">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            БИК:
+                        </div>
+                        <div class="col-10">
+                            <input type="text" class="form-control" placeholder="БИК">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            Номер счета:
+                        </div>
+                        <div class="col-10">
+                            <input type="text" class="form-control" placeholder="Номер счета">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            За что:
+                        </div>
+                        <div class="col-10">
+                            <select class="form-control">
+                                <option selected>Без НДС</option>
+                                <option>НДС 18%</option>
+                                <option>НДС 10%</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            Сколько:
+                        </div>
+                        <div class="col-10">
+                            <input type="number" class="form-control" placeholder="Введите сумму">
+                        </div>
+                    </div>
+                    <div class="form-row align-items-center mt-3">
+                        <div class="col">
+                            Почта:
+                        </div>
+                        <div class="col-10">
+                            <input type="email" class="form-control" placeholder="Почта">
+                        </div>
+                    </div>
+                    <div class="form-row align-items-center mt-3">
+                        <div class="col">
+                            Телефон:
+                        </div>
+                        <div class="col-10">
+                            <input type="phone" class="form-control" placeholder="+7">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Создать платеж</button>
+                <button class="btn btn-info mt-3">Очистить форму</button>
+            </form>
+        </div>
+    </div>
+    <div class="row ml-3 mt-3">
+        <h4>О компании</h4>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <a href="image/banner-1.jpg" target="_blank">
+                    <img src="image/banner-1.jpg" style="width:100%">
+                    <div class="caption">
+                        <p>Продажа готовых баннеров</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <a href="image/banner-2.jpg" target="_blank">
+                    <img src="image/banner-2.jpg" style="width:100%">
+                    <div class="caption">
+                        <p>Разработка новых</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+<script src="core.js"></script>
+<script>
+    window.onload = function () {
+        let clientNameEl = document
+                .getElementById('client-name')
+                .getElementsByClassName('value')[0],
+            clientPhoneEl = document
+                .getElementById('client-phone')
+                .getElementsByClassName('value')[0],
+            clientEmailEl = document
+                .getElementById('client-email')
+                .getElementsByClassName('value')[0];
+
+        sendGetRequest('http://localhost:8080/client/info', function (res) {
+            let obj = JSON.parse(res);
+            console.log(obj);
+            clientNameEl.textContent = obj.fio;
+            clientEmailEl.textContent = obj.email;
+            clientPhoneEl.textContent = obj.phoneNumber;
+        }, function () {
+            location.replace('login.html');
+        })
+    }
+</script>
+</body>
+</html>
