@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Интернет-банк</title>
     <style>
         body {
             background: #eeeeee;
@@ -19,6 +19,15 @@
         .thumbnail {
             transition: all 0.3s ease;
             z-index: 1;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
         }
     </style>
 </head>
@@ -36,7 +45,6 @@
                             ФИО:
                         </div>
                         <div class="col-10 value">
-                            Фамилия Имя Отчество
                         </div>
                     </div>
                     <div id="client-phone" class="row">
@@ -44,7 +52,6 @@
                             Телефон:
                         </div>
                         <div class="col-10 value">
-                            +7 (999) 999-99-99
                         </div>
                     </div>
                     <div id="client-email" class="row">
@@ -52,7 +59,6 @@
                             Почта:
                         </div>
                         <div class="col-10 value">
-                            example@example.com
                         </div>
                     </div>
                 </div>
@@ -89,20 +95,23 @@
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-any-bank" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <form>
+                    <form name="card-payment">
                         <div class="row">
                             <div class="col-auto">
                                 <div class="card border-dark mt-5 mb-3" style="max-width: 18rem;">
                                     <div class="card-body text-dark">
                                         <div class="form-row align-items-center mt-3">
-                                            <input type="text" class="form-control" placeholder="Номер карты">
+                                            <input type="text" class="form-control" placeholder="Номер карты"
+                                                   required pattern="^\d{16}$" name="cardNumber">
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col">
-                                                <input type="text" class="form-control" placeholder="мм/гг">
+                                                <input type="text" class="form-control" placeholder="мм/гг"
+                                                       required pattern="^\d{2}/\d{2}$" name="cardDate">
                                             </div>
                                             <div class="col">
-                                                <input type="text" class="form-control" placeholder="CVC">
+                                                <input type="text" class="form-control" placeholder="CVC"
+                                                       required pattern="^\d{3}$" name="cardCvc">
                                             </div>
                                         </div>
                                     </div>
@@ -115,7 +124,8 @@
                                         Сумма:
                                     </div>
                                     <div class="col-8">
-                                        <input type="number" class="form-control" placeholder="Введите сумму">
+                                        <input type="number" class="form-control" placeholder="Введите сумму"
+                                               required min="1000" max="75000" name="transferAmount">
                                     </div>
                                 </div>
                                 <div class="form-row align-items-center mt-3">
@@ -123,7 +133,8 @@
                                         Комментарий:
                                     </div>
                                     <div class="col-8">
-                                        <input type="text" class="form-control" placeholder="Введите комментарий">
+                                        <input type="text" class="form-control" placeholder="Введите комментарий"
+                                               name="commentary">
                                     </div>
                                 </div>
                                 <div class="form-row align-items-center mt-3">
@@ -131,7 +142,8 @@
                                         Почта:
                                     </div>
                                     <div class="col-8">
-                                        <input type="email" class="form-control" placeholder="Почта">
+                                        <input type="email" class="form-control" placeholder="Почта"
+                                               required name="email">
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary mt-3">Заплатить</button>
@@ -141,14 +153,15 @@
                     </form>
                 </div>
                 <div class="tab-pane fade" id="nav-own-bank" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <form>
+                    <form name="invoice">
                         <div class="m-3">
                             <div class="row mt-3">
                                 <div class="col">
                                     От кого:
                                 </div>
                                 <div class="col-10">
-                                    <input type="text" class="form-control" placeholder="ИНН">
+                                    <input type="text" class="form-control" placeholder="ИНН"
+                                           required pattern="^\d{10}|\d{12}$" name="tin">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -156,7 +169,8 @@
                                     БИК:
                                 </div>
                                 <div class="col-10">
-                                    <input type="text" class="form-control" placeholder="БИК">
+                                    <input type="text" class="form-control" placeholder="БИК"
+                                           required pattern="^\d{9}$" name="bic">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -164,7 +178,8 @@
                                     Номер счета:
                                 </div>
                                 <div class="col-10">
-                                    <input type="text" class="form-control" placeholder="Номер счета">
+                                    <input type="text" class="form-control" placeholder="Номер счета"
+                                           required pattern="^\d{20}$" name="accountNumber">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -172,7 +187,7 @@
                                     За что:
                                 </div>
                                 <div class="col-10">
-                                    <select class="form-control">
+                                    <select class="form-control" name="vat">
                                         <option selected>Без НДС</option>
                                         <option>НДС 18%</option>
                                         <option>НДС 10%</option>
@@ -184,25 +199,27 @@
                                     Сколько:
                                 </div>
                                 <div class="col-10">
-                                    <input type="number" class="form-control" placeholder="Введите сумму">
+                                    <input type="number" class="form-control" placeholder="Введите сумму"
+                                           required min="1000" max="75000" name="transferAmount">
                                 </div>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">Получить файл для интернет-банка</button>
-                        <button class="btn btn-info mt-3">Очистить форму</button>
+                        <button data-target="invoice" class="clear-form btn btn-info mt-3">Очистить форму</button>
                     </form>
                 </div>
             </div>
         </div>
         <div class="tab-pane fade" id="pills-create-payment" role="tabpanel" aria-labelledby="pills-profile-tab">
-            <form>
+            <form name="requested-payment">
                 <div class="m-3">
                     <div class="row mt-3">
                         <div class="col">
                             ИНН получателя:
                         </div>
                         <div class="col-10">
-                            <input type="text" class="form-control" placeholder="ИНН">
+                            <input type="text" class="form-control" placeholder="ИНН"
+                                   required pattern="^\d{10}|\d{12}$">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -210,7 +227,8 @@
                             БИК:
                         </div>
                         <div class="col-10">
-                            <input type="text" class="form-control" placeholder="БИК">
+                            <input type="text" class="form-control" placeholder="БИК"
+                                   required pattern="^\d{9}$">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -218,7 +236,8 @@
                             Номер счета:
                         </div>
                         <div class="col-10">
-                            <input type="text" class="form-control" placeholder="Номер счета">
+                            <input type="text" class="form-control" placeholder="Номер счета"
+                                   required pattern="^\d{20}$">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -238,7 +257,8 @@
                             Сколько:
                         </div>
                         <div class="col-10">
-                            <input type="number" class="form-control" placeholder="Введите сумму">
+                            <input type="number" class="form-control" placeholder="Введите сумму"
+                                   required min="1000" max="75000">
                         </div>
                     </div>
                     <div class="form-row align-items-center mt-3">
@@ -246,7 +266,7 @@
                             Почта:
                         </div>
                         <div class="col-10">
-                            <input type="email" class="form-control" placeholder="Почта">
+                            <input type="email" class="form-control" placeholder="Почта" required>
                         </div>
                     </div>
                     <div class="form-row align-items-center mt-3">
@@ -254,12 +274,13 @@
                             Телефон:
                         </div>
                         <div class="col-10">
-                            <input type="phone" class="form-control" placeholder="+7">
+                            <input type="tel" class="form-control" placeholder="+7"
+                                   required pattern="^(\+\d\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}$">
                         </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-3">Создать платеж</button>
-                <button class="btn btn-info mt-3">Очистить форму</button>
+                <button data-target="requested-payment" class="clear-form btn btn-info mt-3">Очистить форму</button>
             </form>
         </div>
     </div>
@@ -301,26 +322,77 @@
 <script src="core.js"></script>
 <script>
     window.onload = function () {
-        let clientNameEl = document
-                .getElementById('client-name')
-                .getElementsByClassName('value')[0],
-            clientPhoneEl = document
-                .getElementById('client-phone')
-                .getElementsByClassName('value')[0],
-            clientEmailEl = document
-                .getElementById('client-email')
-                .getElementsByClassName('value')[0];
-
         sendGetRequest('http://localhost:8080/client/info', function (res) {
             let obj = JSON.parse(res);
-            console.log(obj);
-            clientNameEl.textContent = obj.fio;
-            clientEmailEl.textContent = obj.email;
-            clientPhoneEl.textContent = obj.phoneNumber;
+            $('#client-name .value')[0].textContent = obj.fio;
+            $('#client-email .value')[0].textContent = obj.email;
+            $('#client-phone .value')[0].textContent = obj.phoneNumber;
         }, function () {
             location.replace('login.html');
         })
-    }
+    };
+
+    $('.clear-form').click(function (e) {
+        $('#' + $(this).data('target')).trigger('reset');
+        e.preventDefault();
+    });
+
+    $('form[name=card-payment] button[type=submit]').click(function (e) {
+        e.preventDefault();
+
+        let formData = JSON.stringify(convertFormToJson(new FormData(document.forms['card-payment'])));
+
+        console.log(formData);
+        if ($('form[name=card-payment] input:invalid').length !== 0) {
+            console.log('Form is invalid');
+            return;
+        }
+
+        sendPostRequest('http://localhost:8080/client/pay', formData,
+            function (res) {
+                addAlert($('body'),
+                    '<div class="alert alert-success" role="alert">\n' +
+                    '  Оплата прошла успешно' +
+                    '</div>'
+                );
+                console.log(res);
+            }, function (error) {
+                addAlert($('body'),
+                    '<div class="alert alert-danger" role="alert">\n' +
+                    '  Что-то пошло не так!' +
+                    '</div>'
+                );
+                console.log(error);
+            }, {'Accept': 'application/json', 'Content-Type': 'application/json'});
+    });
+
+    $('form[name=invoice] button[type=submit]').click(function (e) {
+        e.preventDefault();
+
+        let formData = JSON.stringify(convertFormToJson(new FormData(document.forms['invoice'])));
+
+        console.log(formData);
+        if ($('form[name=invoice] input:invalid').length !== 0) {
+            console.log('Form is invalid');
+            return;
+        }
+
+        sendPostRequest('http://localhost:8080/client/invoice', formData,
+            function (res) {
+                console.log(res);
+                let link = document.createElement('a');
+                link.href = URL.createObjectURL(res.response);
+                link.download = "Dossier_" + new Date() + ".pdf";
+                link.click();
+            }, function (error) {
+                addAlert($('body'),
+                    '<div class="alert alert-danger" role="alert">\n' +
+                    '  Что-то пошло не так!' +
+                    '</div>'
+                );
+                console.log(error);
+            }, {'Accept': 'application/pdf', 'Content-Type': 'application/json'});
+    });
 </script>
 </body>
 </html>
