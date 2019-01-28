@@ -34,6 +34,7 @@ function handleRequest(req, resolve = null, reject = null) {
     if (req.readyState !== 4) return;
 
     if (req.status !== 200) {
+        console.log(req.status);
         if (reject != null) {
             reject(req.response);
         }
@@ -81,4 +82,37 @@ function clickLink(link) {
     });
 
     link.dispatchEvent(clickEvent);
+}
+
+function jsonForm(formName) {
+    return JSON.stringify(convertFormToJson(new FormData(document.forms[formName])));
+}
+
+function savePayment(address, paymentType, event) {
+    event.preventDefault();
+
+    let formData = jsonForm(paymentType);
+
+    console.log(formData);
+    if ($(`form[name=${paymentType}] input:invalid`).length !== 0) {
+        console.log('Form is invalid');
+        return;
+    }
+
+    sendPostRequest(address, formData,
+        function (res) {
+            addAlert($('body'),
+                '<div class="alert alert-success" role="alert">\n' +
+                '  Оплата прошла успешно' +
+                '</div>'
+            );
+            console.log(res);
+        }, function (error) {
+            addAlert($('body'),
+                '<div class="alert alert-danger" role="alert">\n' +
+                '  Что-то пошло не так!' +
+                '</div>'
+            );
+            console.log(error);
+        }, {'Accept': 'application/json', 'Content-Type': 'application/json'});
 }

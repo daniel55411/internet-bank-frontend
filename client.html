@@ -153,7 +153,7 @@
                     </form>
                 </div>
                 <div class="tab-pane fade" id="nav-own-bank" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <form name="invoice">
+                    <form name="invoice" id="invoice">
                         <div class="m-3">
                             <div class="row mt-3">
                                 <div class="col">
@@ -211,7 +211,7 @@
             </div>
         </div>
         <div class="tab-pane fade" id="pills-create-payment" role="tabpanel" aria-labelledby="pills-profile-tab">
-            <form name="requested-payment">
+            <form name="requested-payment" id="requested-payment">
                 <div class="m-3">
                     <div class="row mt-3">
                         <div class="col">
@@ -338,61 +338,11 @@
     });
 
     $('form[name=card-payment] button[type=submit]').click(function (e) {
-        e.preventDefault();
-
-        let formData = JSON.stringify(convertFormToJson(new FormData(document.forms['card-payment'])));
-
-        console.log(formData);
-        if ($('form[name=card-payment] input:invalid').length !== 0) {
-            console.log('Form is invalid');
-            return;
-        }
-
-        sendPostRequest('http://localhost:8080/client/pay', formData,
-            function (res) {
-                addAlert($('body'),
-                    '<div class="alert alert-success" role="alert">\n' +
-                    '  Оплата прошла успешно' +
-                    '</div>'
-                );
-                console.log(res);
-            }, function (error) {
-                addAlert($('body'),
-                    '<div class="alert alert-danger" role="alert">\n' +
-                    '  Что-то пошло не так!' +
-                    '</div>'
-                );
-                console.log(error);
-            }, {'Accept': 'application/json', 'Content-Type': 'application/json'});
+        savePayment('http://localhost:8080/client/pay', 'card-payment', e);
     });
 
     $('form[name=requested-payment] button[type=submit]').click(function (e) {
-        e.preventDefault();
-
-        let formData = JSON.stringify(convertFormToJson(new FormData(document.forms['requested-payment'])));
-
-        console.log(formData);
-        if ($('form[name=requested-payment] input:invalid').length !== 0) {
-            console.log('Form is invalid');
-            return;
-        }
-
-        sendPostRequest('http://localhost:8080/client/create-payment', formData,
-            function (res) {
-                addAlert($('body'),
-                    '<div class="alert alert-success" role="alert">\n' +
-                    '  Оплата прошла успешно' +
-                    '</div>'
-                );
-                console.log(res);
-            }, function (error) {
-                addAlert($('body'),
-                    '<div class="alert alert-danger" role="alert">\n' +
-                    '  Что-то пошло не так!' +
-                    '</div>'
-                );
-                console.log(error);
-            }, {'Accept': 'application/json', 'Content-Type': 'application/json'});
+        savePayment('http://localhost:8080/client/create-payment', 'requested-payment', e);
     });
 
     $('form[name=invoice] button[type=submit]').click(function (e) {

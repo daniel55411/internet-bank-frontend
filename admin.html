@@ -1,10 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Админ-панель</title>
+    <style>
+        body {
+            background: #eeeeee;
+        }
+
+        .container {
+            background: white;
+        }
+
+        .thumbnail {
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
 </head>
 <body>
+<div class="container border border-dark mt-5 p-3">
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="pills-card-payments-tab" data-toggle="pill" href="#pills-card-payments"
+               role="tab" aria-controls="pills-card-payments" aria-selected="true">
+                Платежи с карты
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-requested-payments-tab" data-toggle="pill" href="#pills-requested-payments"
+               role="tab" aria-controls="pills-requested-payments" aria-selected="false">
+                Запрошенные платежи
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-card-payments" role="tabpanel"
+             aria-labelledby="pills-card-payments-tab">
+            <form name="card-payment">
+                <div class="row">
+                    <div class="col-auto">
+                        <div class="card border-dark mt-5 mb-3" style="max-width: 18rem;">
+                            <div class="card-body text-dark">
+                                <div class="form-row align-items-center mt-3">
+                                    <input type="text" class="form-control" placeholder="Номер карты" name="cardNumber">
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <input type="text" class="form-control" placeholder="мм/гг" name="cardDate">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" placeholder="CVC" name="cardCvc">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md mt-3">
 
+                        <div class="form-row align-items-center mt-3">
+                            <div class="col-3">
+                                Сумма:
+                            </div>
+                            <div class="col-8">
+                                <input type="number" class="form-control" placeholder="Введите сумму" name="transferAmount">
+                            </div>
+                        </div>
+                        <div class="form-row align-items-center mt-3">
+                            <div class="col-3">
+                                Комментарий:
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" placeholder="Введите комментарий"
+                                       name="commentary">
+                            </div>
+                        </div>
+                        <div class="form-row align-items-center mt-3">
+                            <div class="col-3">
+                                Почта:
+                            </div>
+                            <div class="col-8">
+                                <input type="email" class="form-control" placeholder="Почта"name="email">
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        Сортировать по:
+                    </div>
+                    <div class="col-10">
+                        <select class="form-control" id="card-payment-sort-order">
+                            <option selected value="asc">По возрастанию</option>
+                            <option value="desc">По убыванию</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        Выберите поле для сортировки
+                    </div>
+                    <div class="col-10">
+                        <select class="form-control" id="card-payment-sort-field">
+                            <option selected value="id">Номер</option>
+                            <option value="cardNumber">Номер карты</option>
+                            <option value="transferAmount">Сумма перевода</option>
+                            <option value="cardDate">Срок истечения карты</option>
+                            <option value="commentary">Комментарий</option>
+                            <option value="email">Почта</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        Сколько отображать
+                    </div>
+                    <div class="col-10">
+                        <select class="form-control" id="card-payment-size">
+                            <option selected>1</option>
+                            <option>2</option>
+                            <option>10</option>
+                            <option>50</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="card-payment-submit" type="submit" class="btn btn-primary mt-3">Найти</button>
+            </form>
+            <table id="card-payments" class="table mt-3">
+                <thead id="card-payments-head" class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Номер карты</th>
+                    <th scope="col">Срок окончания карты</th>
+                    <th scope="col">Сумма перевода</th>
+                    <th scope="col">Комментарий</th>
+                    <th scope="col">Почта</th>
+                    <th scope="col">Безопасный платеж</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tab-pane fade" id="pills-requested-payments" role="tabpanel"
+             aria-labelledby="pills-requested-payments-tab">
+            <form name="requested-payment" id="requested-payment">
+                <div class="m-3">
+                    <div class="row mt-3">
+                        <div class="col">
+                            ИНН получателя:
+                        </div>
+                        <div class="col-10">
+                            <input type="text" class="form-control" placeholder="ИНН" name="tin">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            БИК:
+                        </div>
+                        <div class="col-10">
+                            <input type="text" class="form-control" placeholder="БИК" name="bic">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            Номер счета:
+                        </div>
+                        <div class="col-10">
+                            <input type="text" class="form-control" placeholder="Номер счета" name="accountNumber">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            За что:
+                        </div>
+                        <div class="col-10">
+                            <select class="form-control" name="vat">
+                                <option selected>Без НДС</option>
+                                <option>НДС 18%</option>
+                                <option>НДС 10%</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            Сколько:
+                        </div>
+                        <div class="col-10">
+                            <input type="number" class="form-control" placeholder="Введите сумму" name="transferAmount">
+                        </div>
+                    </div>
+                    <div class="form-row align-items-center mt-3">
+                        <div class="col">
+                            Почта:
+                        </div>
+                        <div class="col-10">
+                            <input type="email" class="form-control" placeholder="Почта" name="email">
+                        </div>
+                    </div>
+                    <div class="form-row align-items-center mt-3">
+                        <div class="col">
+                            Телефон:
+                        </div>
+                        <div class="col-10">
+                            <input type="tel" class="form-control" placeholder="+7" name="phoneNumber">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            Сортировать по:
+                        </div>
+                        <div class="col-10">
+                            <select class="form-control" id="requested-payment-sort-order">
+                                <option selected value="asc">По возрастанию</option>
+                                <option value="desc">По убыванию</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            Выберите поле для сортировки
+                        </div>
+                        <div class="col-10">
+                            <select class="form-control" id="requested-payment-sort-field">
+                                <option selected value="id">Номер</option>
+                                <option value="cardNumber">Номер карты</option>
+                                <option value="transferAmount">Сумма перевода</option>
+                                <option value="cardDate">Срок истечения карты</option>
+                                <option value="commentary">Комментарий</option>
+                                <option value="email">Почта</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            Сколько отображать
+                        </div>
+                        <div class="col-10">
+                            <select class="form-control" id="requested-payment-size">
+                                <option selected>1</option>
+                                <option>2</option>
+                                <option>10</option>
+                                <option>50</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button id="requested-payment-submit" type="submit" class="btn btn-primary mt-3">Найти</button>
+                <button data-target="requested-payment" class="clear-form btn btn-info mt-3">Очистить форму</button>
+            </form>
+            <table id="requested-payments" class="table mt-3">
+                <thead id="requested-payments-head" class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Номер аккаунта</th>
+                    <th scope="col">ИНН</th>
+                    <th scope="col">БИК</th>
+                    <th scope="col">НДС</th>
+                    <th scope="col">Сумма</th>
+                    <th scope="col">Почта</th>
+                    <th scope="col">Телефон</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+<script src="core.js"></script>
+<script>
+    // window.onload = function () {
+    //     sendGetRequest('http://localhost:8080/client/info', function () {
+    //         },
+    //         function () {
+    //             location.replace('login.html');
+    //         })
+    // };
+
+    $('.clear-form').click(function (e) {
+        $('#' + $(this).data('target')).trigger('reset');
+        e.preventDefault();
+    });
+
+    $('#card-payment-submit').click(function (e) {
+        e.preventDefault();
+
+        
+    });
+</script>
 </body>
 </html>
