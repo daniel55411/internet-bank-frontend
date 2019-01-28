@@ -218,7 +218,7 @@
                             ИНН получателя:
                         </div>
                         <div class="col-10">
-                            <input type="text" class="form-control" placeholder="ИНН"
+                            <input type="text" class="form-control" placeholder="ИНН" name="tin"
                                    required pattern="^\d{10}|\d{12}$">
                         </div>
                     </div>
@@ -227,7 +227,7 @@
                             БИК:
                         </div>
                         <div class="col-10">
-                            <input type="text" class="form-control" placeholder="БИК"
+                            <input type="text" class="form-control" placeholder="БИК" name="bic"
                                    required pattern="^\d{9}$">
                         </div>
                     </div>
@@ -236,7 +236,7 @@
                             Номер счета:
                         </div>
                         <div class="col-10">
-                            <input type="text" class="form-control" placeholder="Номер счета"
+                            <input type="text" class="form-control" placeholder="Номер счета" name="accountNumber"
                                    required pattern="^\d{20}$">
                         </div>
                     </div>
@@ -245,7 +245,7 @@
                             За что:
                         </div>
                         <div class="col-10">
-                            <select class="form-control">
+                            <select class="form-control" name="vat">
                                 <option selected>Без НДС</option>
                                 <option>НДС 18%</option>
                                 <option>НДС 10%</option>
@@ -257,7 +257,7 @@
                             Сколько:
                         </div>
                         <div class="col-10">
-                            <input type="number" class="form-control" placeholder="Введите сумму"
+                            <input type="number" class="form-control" placeholder="Введите сумму" name="transferAmount"
                                    required min="1000" max="75000">
                         </div>
                     </div>
@@ -266,7 +266,7 @@
                             Почта:
                         </div>
                         <div class="col-10">
-                            <input type="email" class="form-control" placeholder="Почта" required>
+                            <input type="email" class="form-control" placeholder="Почта" name="email" required>
                         </div>
                     </div>
                     <div class="form-row align-items-center mt-3">
@@ -274,7 +274,7 @@
                             Телефон:
                         </div>
                         <div class="col-10">
-                            <input type="tel" class="form-control" placeholder="+7"
+                            <input type="tel" class="form-control" placeholder="+7" name="phoneNumber"
                                    required pattern="^(\+\d\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}$">
                         </div>
                     </div>
@@ -366,6 +366,35 @@
             }, {'Accept': 'application/json', 'Content-Type': 'application/json'});
     });
 
+    $('form[name=requested-payment] button[type=submit]').click(function (e) {
+        e.preventDefault();
+
+        let formData = JSON.stringify(convertFormToJson(new FormData(document.forms['requested-payment'])));
+
+        console.log(formData);
+        if ($('form[name=requested-payment] input:invalid').length !== 0) {
+            console.log('Form is invalid');
+            return;
+        }
+
+        sendPostRequest('http://localhost:8080/client/create-payment', formData,
+            function (res) {
+                addAlert($('body'),
+                    '<div class="alert alert-success" role="alert">\n' +
+                    '  Оплата прошла успешно' +
+                    '</div>'
+                );
+                console.log(res);
+            }, function (error) {
+                addAlert($('body'),
+                    '<div class="alert alert-danger" role="alert">\n' +
+                    '  Что-то пошло не так!' +
+                    '</div>'
+                );
+                console.log(error);
+            }, {'Accept': 'application/json', 'Content-Type': 'application/json'});
+    });
+
     $('form[name=invoice] button[type=submit]').click(function (e) {
         e.preventDefault();
 
@@ -379,19 +408,19 @@
 
         sendPostRequest('http://localhost:8080/client/invoice', formData,
             function (res) {
-                console.log(res);
                 let link = document.createElement('a');
-                link.href = URL.createObjectURL(res.response);
-                link.download = "Dossier_" + new Date() + ".pdf";
-                link.click();
+                link.href = window.URL.createObjectURL(res);
+                link.download = "Накладная.pdf";
+                clickLink(link);
             }, function (error) {
                 addAlert($('body'),
                     '<div class="alert alert-danger" role="alert">\n' +
                     '  Что-то пошло не так!' +
                     '</div>'
                 );
-                console.log(error);
-            }, {'Accept': 'application/pdf', 'Content-Type': 'application/json'});
+            }, {'Accept': 'application/pdf', 'Content-Type': 'application/json'},
+            "blob"
+        );
     });
 </script>
 </body>

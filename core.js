@@ -1,8 +1,9 @@
-function sendPostRequest(url, formData, resolve = null, reject = null, headers={}) {
+function sendPostRequest(url, formData, resolve = null, reject = null, headers = {}, responseType = 'text') {
     let xhr = new XMLHttpRequest();
 
     xhr.open('POST', url, true);
     xhr.withCredentials = true;
+    xhr.responseType = responseType;
 
     for (let key in headers) {
         if (headers.hasOwnProperty(key)) {
@@ -70,4 +71,14 @@ function convertFormToJson(form) {
 
         return object;
     }
+}
+
+function clickLink(link) {
+    let clickEvent = new MouseEvent("click", {
+        "view": window,
+        "bubbles": true,
+        "cancelable": false
+    });
+
+    link.dispatchEvent(clickEvent);
 }
