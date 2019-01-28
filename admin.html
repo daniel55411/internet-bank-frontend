@@ -48,100 +48,116 @@
         </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
+
         <div class="tab-pane fade show active" id="pills-card-payments" role="tabpanel"
              aria-labelledby="pills-card-payments-tab">
-            <form name="card-payment">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="card border-dark mt-5 mb-3" style="max-width: 18rem;">
-                            <div class="card-body text-dark">
+            <p>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+                        aria-expanded="false" aria-controls="collapseExample">
+                    Фильтры
+                </button>
+            </p>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <form name="card-payment">
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="card border-dark mt-5 mb-3" style="max-width: 18rem;">
+                                    <div class="card-body text-dark">
+                                        <div class="form-row align-items-center mt-3">
+                                            <input type="text" class="form-control" placeholder="Номер карты"
+                                                   name="cardNumber">
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="мм/гг"
+                                                       name="cardDate">
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="CVC"
+                                                       name="cardCvc">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md mt-3">
+
                                 <div class="form-row align-items-center mt-3">
-                                    <input type="text" class="form-control" placeholder="Номер карты" name="cardNumber">
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col">
-                                        <input type="text" class="form-control" placeholder="мм/гг" name="cardDate">
+                                    <div class="col-3">
+                                        Сумма:
                                     </div>
-                                    <div class="col">
-                                        <input type="text" class="form-control" placeholder="CVC" name="cardCvc">
+                                    <div class="col-8">
+                                        <input type="number" class="form-control" placeholder="Введите сумму"
+                                               name="transferAmount">
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md mt-3">
-
-                        <div class="form-row align-items-center mt-3">
-                            <div class="col-3">
-                                Сумма:
-                            </div>
-                            <div class="col-8">
-                                <input type="number" class="form-control" placeholder="Введите сумму" name="transferAmount">
-                            </div>
-                        </div>
-                        <div class="form-row align-items-center mt-3">
-                            <div class="col-3">
-                                Комментарий:
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" placeholder="Введите комментарий"
-                                       name="commentary">
-                            </div>
-                        </div>
-                        <div class="form-row align-items-center mt-3">
-                            <div class="col-3">
-                                Почта:
-                            </div>
-                            <div class="col-8">
-                                <input type="email" class="form-control" placeholder="Почта"name="email">
+                                <div class="form-row align-items-center mt-3">
+                                    <div class="col-3">
+                                        Комментарий:
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text" class="form-control" placeholder="Введите комментарий"
+                                               name="commentary">
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mt-3">
+                                    <div class="col-3">
+                                        Почта:
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="email" class="form-control" placeholder="Почта" name="email">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
 
+                    </form>
+                    <div class="row mt-3">
+                        <div class="col">
+                            Сортировать по:
+                        </div>
+                        <div class="col-10">
+                            <select class="form-control" id="card-payment-sort-order">
+                                <option selected value="asc">По возрастанию</option>
+                                <option value="desc">По убыванию</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            Выберите поле для сортировки
+                        </div>
+                        <div class="col-10">
+                            <select class="form-control" id="card-payment-sort-field">
+                                <option selected value="id">Номер</option>
+                                <option value="cardNumber">Номер карты</option>
+                                <option value="transferAmount">Сумма перевода</option>
+                                <option value="cardDate">Срок истечения карты</option>
+                                <option value="commentary">Комментарий</option>
+                                <option value="email">Почта</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            Сколько отображать
+                        </div>
+                        <div class="col-10">
+                            <select class="form-control" id="card-payment-size">
+                                <option selected value="-1">Все</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="10">10</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="card-payment-submit" type="submit" class="btn btn-primary mt-3">Найти</button>
 
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col">
-                        Сортировать по:
-                    </div>
-                    <div class="col-10">
-                        <select class="form-control" id="card-payment-sort-order">
-                            <option selected value="asc">По возрастанию</option>
-                            <option value="desc">По убыванию</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col">
-                        Выберите поле для сортировки
-                    </div>
-                    <div class="col-10">
-                        <select class="form-control" id="card-payment-sort-field">
-                            <option selected value="id">Номер</option>
-                            <option value="cardNumber">Номер карты</option>
-                            <option value="transferAmount">Сумма перевода</option>
-                            <option value="cardDate">Срок истечения карты</option>
-                            <option value="commentary">Комментарий</option>
-                            <option value="email">Почта</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col">
-                        Сколько отображать
-                    </div>
-                    <div class="col-10">
-                        <select class="form-control" id="card-payment-size">
-                            <option selected>1</option>
-                            <option>2</option>
-                            <option>10</option>
-                            <option>50</option>
-                        </select>
-                    </div>
-                </div>
-                <button id="card-payment-submit" type="submit" class="btn btn-primary mt-3">Найти</button>
-            </form>
             <table id="card-payments" class="table mt-3">
                 <thead id="card-payments-head" class="thead-light">
                 <tr>
@@ -161,68 +177,83 @@
 
         <div class="tab-pane fade" id="pills-requested-payments" role="tabpanel"
              aria-labelledby="pills-requested-payments-tab">
-            <form name="requested-payment" id="requested-payment">
-                <div class="m-3">
-                    <div class="row mt-3">
-                        <div class="col">
-                            ИНН получателя:
+            <p>
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample_2" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Фильтры
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample_2">
+                <div class="card card-body">
+                    <form name="requested-payment" id="requested-payment">
+                        <div class="m-3">
+                            <div class="row mt-3">
+                                <div class="col">
+                                    ИНН получателя:
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control" placeholder="ИНН" name="tin">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    БИК:
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control" placeholder="БИК" name="bic">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    Номер счета:
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control" placeholder="Номер счета"
+                                           name="accountNumber">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    За что:
+                                </div>
+                                <div class="col-10">
+                                    <select class="form-control" name="vat">
+                                        <option selected>Без НДС</option>
+                                        <option>НДС 18%</option>
+                                        <option>НДС 10%</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    Сколько:
+                                </div>
+                                <div class="col-10">
+                                    <input type="number" class="form-control" placeholder="Введите сумму"
+                                           name="transferAmount">
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center mt-3">
+                                <div class="col">
+                                    Почта:
+                                </div>
+                                <div class="col-10">
+                                    <input type="email" class="form-control" placeholder="Почта" name="email">
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center mt-3">
+                                <div class="col">
+                                    Телефон:
+                                </div>
+                                <div class="col-10">
+                                    <input type="tel" class="form-control" placeholder="+7" name="phoneNumber">
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="col-10">
-                            <input type="text" class="form-control" placeholder="ИНН" name="tin">
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            БИК:
-                        </div>
-                        <div class="col-10">
-                            <input type="text" class="form-control" placeholder="БИК" name="bic">
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            Номер счета:
-                        </div>
-                        <div class="col-10">
-                            <input type="text" class="form-control" placeholder="Номер счета" name="accountNumber">
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            За что:
-                        </div>
-                        <div class="col-10">
-                            <select class="form-control" name="vat">
-                                <option selected>Без НДС</option>
-                                <option>НДС 18%</option>
-                                <option>НДС 10%</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            Сколько:
-                        </div>
-                        <div class="col-10">
-                            <input type="number" class="form-control" placeholder="Введите сумму" name="transferAmount">
-                        </div>
-                    </div>
-                    <div class="form-row align-items-center mt-3">
-                        <div class="col">
-                            Почта:
-                        </div>
-                        <div class="col-10">
-                            <input type="email" class="form-control" placeholder="Почта" name="email">
-                        </div>
-                    </div>
-                    <div class="form-row align-items-center mt-3">
-                        <div class="col">
-                            Телефон:
-                        </div>
-                        <div class="col-10">
-                            <input type="tel" class="form-control" placeholder="+7" name="phoneNumber">
-                        </div>
-                    </div>
+                        <button data-target="requested-payment" class="clear-form btn btn-info mt-3">Очистить форму
+                        </button>
+                    </form>
                     <div class="row mt-3">
                         <div class="col">
                             Сортировать по:
@@ -255,17 +286,18 @@
                         </div>
                         <div class="col-10">
                             <select class="form-control" id="requested-payment-size">
-                                <option selected>1</option>
-                                <option>2</option>
-                                <option>10</option>
-                                <option>50</option>
+                                <option selected value="-1">Все</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="10">10</option>
+                                <option value="50">50</option>
                             </select>
                         </div>
                     </div>
+
                 </div>
-                <button id="requested-payment-submit" type="submit" class="btn btn-primary mt-3">Найти</button>
-                <button data-target="requested-payment" class="clear-form btn btn-info mt-3">Очистить форму</button>
-            </form>
+            </div>
+            <button id="requested-payment-submit" type="submit" class="btn btn-primary mt-3">Найти</button>
             <table id="requested-payments" class="table mt-3">
                 <thead id="requested-payments-head" class="thead-light">
                 <tr>
@@ -313,7 +345,61 @@
     $('#card-payment-submit').click(function (e) {
         e.preventDefault();
 
-        
+        let data = jsonForm('card-payment'),
+            criteria = getCriteria('card-payment');
+
+        sendPostRequest('http://localhost:8080/admin/get-card-payments' + criteria,
+            data,
+            function (arr) {
+                let rows = '',
+                    data = JSON.parse(arr);
+
+                for (let key in data) {
+                    rows += createRow(data[key], 'card-payment');
+                }
+
+                console.log(rows);
+                $('#card-payments tbody').html(rows);
+            }, function (err) {
+                console.log(err);
+                addAlert($('body'),
+                    '<div class="alert alert-danger" role="alert">\n' +
+                    '  Что-то пошло не так!' +
+                    '</div>'
+                );
+            }, {'Accept': 'application/json', 'Content-Type': 'application/json'});
+
+    });
+
+    $('#requested-payment-submit').click(function (e) {
+        e.preventDefault();
+
+        let data = jsonForm('requested-payment'),
+            criteria = getCriteria('requested-payment');
+
+        console.log(data);
+
+        sendPostRequest('http://localhost:8080/admin/get-requested-payments' + criteria,
+            data,
+            function (arr) {
+                let rows = '',
+                    data = JSON.parse(arr);
+
+                for (let key in data) {
+                    rows += createRow(data[key], 'requested-payment');
+                }
+
+                console.log(rows);
+                $('#requested-payments tbody').html(rows);
+            }, function (err) {
+                console.log(err);
+                addAlert($('body'),
+                    '<div class="alert alert-danger" role="alert">\n' +
+                    '  Что-то пошло не так!' +
+                    '</div>'
+                );
+            }, {'Accept': 'application/json', 'Content-Type': 'application/json'});
+
     });
 </script>
 </body>

@@ -116,3 +116,29 @@ function savePayment(address, paymentType, event) {
             console.log(error);
         }, {'Accept': 'application/json', 'Content-Type': 'application/json'});
 }
+
+function getCriteria(type) {
+    let sortOrder = $(`#${type}-sort-order`).val(),
+        sortField = $(`#${type}-sort-field`).val();
+
+    return `?sort-order=${sortOrder}&sort-field=${sortField}`;
+}
+
+skeletonRow = {
+    "card-payment": ['id', 'cardNumber', 'cardDate', 'transferAmount', 'commentary', 'email', 'unsafe'],
+    "requested-payment": ['id', 'accountNumber', 'tin', 'bic', 'vat', 'transferAmount', 'email', 'phoneNumber']
+};
+
+function encodeHTML(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+}
+
+function createRow(data, type) {
+    let tableRow = '';
+
+    for (let key in skeletonRow[type]) {
+        tableRow += `<td>${data[skeletonRow[type][key]]}</td>`;
+    }
+
+    return `<tr>${tableRow}</tr>`;
+}
