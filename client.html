@@ -33,6 +33,16 @@
 </head>
 <body>
 <div class="container border border-dark mt-5 p-3">
+    <nav class="navbar sticky-top navbar-light" style="background-color: #f7f7f7;">
+        <a class="navbar-brand">Банк</a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="admin.html">Посмотреть платежи</a>
+            </li>
+        </ul>
+
+        <button class="logout btn btn-outline-secondary" type="button">Выход</button>
+    </nav>
     <div class="media pt-3">
         <div class="media-body">
             <div class="card">
@@ -329,7 +339,7 @@
             $('#client-phone .value')[0].textContent = obj.phoneNumber;
         }, function () {
             location.replace('login.html');
-        })
+        });
     };
 
     $('.clear-form').click(function (e) {
@@ -371,6 +381,18 @@
             }, {'Accept': 'application/pdf', 'Content-Type': 'application/json'},
             "blob"
         );
+    });
+
+    $('.logout').click(function () {
+        sendGetRequest('http://localhost:8080/logout', function () {
+            location.replace('login.html');
+        }, function () {
+            addAlert($('body'),
+                '<div class="alert alert-danger" role="alert">\n' +
+                '  Что-то пошло не так!' +
+                '</div>'
+            );
+        });
     });
 </script>
 </body>

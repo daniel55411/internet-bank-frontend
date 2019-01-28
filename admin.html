@@ -12,6 +12,10 @@
             background: #eeeeee;
         }
 
+        .pagination {
+            display: none;
+        }
+
         .container {
             background: white;
         }
@@ -33,6 +37,10 @@
 </head>
 <body>
 <div class="container border border-dark mt-5 p-3">
+    <nav class="mb-3 navbar sticky-top navbar-light" style="background-color: #f7f7f7;">
+        <a class="navbar-brand">Банк</a>
+        <button class="logout btn btn-outline-secondary" type="button">Выход</button>
+    </nav>
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" id="pills-card-payments-tab" data-toggle="pill" href="#pills-card-payments"
@@ -105,7 +113,7 @@
                                     <div class="col-3">
                                         Почта:
                                     </div>
-                                    <div class="col-8">
+                                    <div class="col-8">a
                                         <input type="email" class="form-control" placeholder="Почта" name="email">
                                     </div>
                                 </div>
@@ -173,6 +181,14 @@
                 <tbody>
                 </tbody>
             </table>
+            <ul id="card-payment-page" class="pagination justify-content-center">
+                <li class="first page-item">
+                    <a class="page-link previous-page" href="#">Предыдущий</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link next-page" href="#">Следующий</a>
+                </li>
+            </ul>
         </div>
 
         <div class="tab-pane fade" id="pills-requested-payments" role="tabpanel"
@@ -314,6 +330,14 @@
                 <tbody>
                 </tbody>
             </table>
+            <ul id="requested-payment-page" class="pagination justify-content-center">
+                <li class="first page-item">
+                    <a class="page-link previous-page" href="#">Предыдущий</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link next-page" href="#">Следующий</a>
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -329,77 +353,93 @@
         crossorigin="anonymous"></script>
 <script src="core.js"></script>
 <script>
-    // window.onload = function () {
-    //     sendGetRequest('http://localhost:8080/client/info', function () {
-    //         },
-    //         function () {
-    //             location.replace('login.html');
-    //         })
-    // };
+    window.onload = function () {
+        sendGetRequest('http://localhost:8080/client/info', function () {
+            },
+            function () {
+                location.replace('login.html');
+            })
+    };
 
     $('.clear-form').click(function (e) {
         $('#' + $(this).data('target')).trigger('reset');
         e.preventDefault();
     });
 
-    $('#card-payment-submit').click(function (e) {
+    $('#card-payment-page .previous-page').click(function (e) {
         e.preventDefault();
 
-        let data = jsonForm('card-payment'),
-            criteria = getCriteria('card-payment');
+        let el = $('#card-payment-page .active'),
+            prev = el.prev('.index-page');
 
-        sendPostRequest('http://localhost:8080/admin/get-card-payments' + criteria,
-            data,
-            function (arr) {
-                let rows = '',
-                    data = JSON.parse(arr);
+        if (prev.length !== 0) {
+            el.removeClass('active');
+            prev.addClass('active');
 
-                for (let key in data) {
-                    rows += createRow(data[key], 'card-payment');
-                }
+            prev.find('.index-link:first').click();
+        }
+    });
 
-                console.log(rows);
-                $('#card-payments tbody').html(rows);
-            }, function (err) {
-                console.log(err);
-                addAlert($('body'),
-                    '<div class="alert alert-danger" role="alert">\n' +
-                    '  Что-то пошло не так!' +
-                    '</div>'
-                );
-            }, {'Accept': 'application/json', 'Content-Type': 'application/json'});
+    $('#requested-payment-page .previous-page').click(function (e) {
+        e.preventDefault();
 
+        let el = $('#requested-payment-page .active'),
+            prev = el.prev('.index-page');
+
+        if (prev.length !== 0) {
+            el.removeClass('active');
+            prev.addClass('active');
+
+            prev.find('.index-link:first').click();
+        }
+    });
+
+    $('#card-payment-page .next-page').click(function (e) {
+        e.preventDefault();
+
+        let el = $('#card-payment-page .active'),
+            next = el.next('.index-page');
+
+        if (next.length !== 0) {
+            el.removeClass('active');
+            next.addClass('active');
+
+            next.find('.index-link:first').click();
+        }
+    });
+
+    $('#requested-payment-page .next-page').click(function (e) {
+        e.preventDefault();
+
+        let el = $('#requested-payment-page .active'),
+            next = el.next('.index-page');
+
+        if (next.length !== 0) {
+            el.removeClass('active');
+            next.addClass('active');
+
+            next.find('.index-link:first').click();
+        }
+    });
+
+    $('#card-payment-submit').click(function (e) {
+        getPayments('http://localhost:8080/admin/get-card-payments', 'card-payment', e);
     });
 
     $('#requested-payment-submit').click(function (e) {
-        e.preventDefault();
+        getPayments('http://localhost:8080/admin/get-requested-payments', 'requested-payment', e);
+    });
 
-        let data = jsonForm('requested-payment'),
-            criteria = getCriteria('requested-payment');
-
-        console.log(data);
-
-        sendPostRequest('http://localhost:8080/admin/get-requested-payments' + criteria,
-            data,
-            function (arr) {
-                let rows = '',
-                    data = JSON.parse(arr);
-
-                for (let key in data) {
-                    rows += createRow(data[key], 'requested-payment');
-                }
-
-                console.log(rows);
-                $('#requested-payments tbody').html(rows);
-            }, function (err) {
-                console.log(err);
-                addAlert($('body'),
-                    '<div class="alert alert-danger" role="alert">\n' +
-                    '  Что-то пошло не так!' +
-                    '</div>'
-                );
-            }, {'Accept': 'application/json', 'Content-Type': 'application/json'});
-
+    $('.logout').click(function () {
+        sendGetRequest('http://localhost:8080/logout', function () {
+            location.replace('login.html');
+        }, function () {
+            addAlert($('body'),
+                '<div class="alert alert-danger" role="alert">\n' +
+                '  Что-то пошло не так!' +
+                '</div>'
+            );
+        });
     });
 </script>
 </body>

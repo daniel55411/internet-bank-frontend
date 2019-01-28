@@ -119,9 +119,10 @@ function savePayment(address, paymentType, event) {
 
 function getCriteria(type) {
     let sortOrder = $(`#${type}-sort-order`).val(),
-        sortField = $(`#${type}-sort-field`).val();
+        sortField = $(`#${type}-sort-field`).val(),
+        size = $(`#${type}-size`).val();
 
-    return `?sort-order=${sortOrder}&sort-field=${sortField}`;
+    return `?sort-order=${sortOrder}&sort-field=${sortField}&size=${size}`;
 }
 
 skeletonRow = {
@@ -141,4 +142,63 @@ function createRow(data, type) {
     }
 
     return `<tr>${tableRow}</tr>`;
+}
+
+function getPayments(address, type, event, page) {
+    event.preventDefault();
+
+    let data = jsonForm(type),
+        criteria = getCriteria(type);
+
+    console.log(data);
+
+    if (page) {
+        criteria += `&page=${page}`;
+    }
+
+    sendPostRequest(address + criteria,
+        data,
+        function (arr) {
+            let rows = '',
+                data = JSON.parse(arr),
+                array = 'content' in data ? data['content'] : data,
+                page = $(`#${type}-page`);
+
+
+            for (let key in array) {
+                rows += createRow(array[key], type);
+            }
+
+            $(`#${type}s tbody`).html(rows);
+            if ('content' in data && (page.children().length - 2 !== data.totalPages || page.css('display') === 'none')) {
+                page.find('.index-page').remove();
+                page.css('display', 'flex');
+
+                let list = '';
+
+                for (let i = 0; i < data.totalPages; i++) {
+                    list += `<li class="page-item ${data.number === i ? 'active' : ''} index-page"><a class="page-link index-link" href="#">${i}</a></li>`;
+                }
+
+                $(`#${type}-page .first`).after(list);
+
+                $(`#${type}-page .index-link`).click(function (e) {
+                    $(`#${type}-page .index-page.active`).removeClass('active');
+                    $(this).parent().addClass('active');
+
+                    getPayments(address, type, e, $(this).text());
+                });
+            } else if (!('content' in data)) {
+                page.find('.index-page').remove();
+                page.css('display', 'none');
+            }
+        }, function (err) {
+            console.log(err);
+            addAlert($('body'),
+                '<div class="alert alert-danger" role="alert">\n' +
+                '  Что-то пошло не так!' +
+                '</div>'
+            );
+        }, {'Accept': 'application/json', 'Content-Type': 'application/json'});
+
 }
