@@ -46,12 +46,11 @@ function handleRequest(req, resolve = null, reject = null) {
     }
 }
 
-function addAlert(el, html) {
-    let newElement = createElementFromHTML(html);
-    el.prepend(newElement);
+function addAlert(modalId) {
+    $(modalId).modal('show');
 
     setTimeout(function () {
-        newElement.parentNode.removeChild(newElement);
+        $(modalId).modal('hide');
     }, 3000)
 }
 
@@ -194,11 +193,7 @@ function getPayments(address, type, event, page) {
             }
         }, function (err) {
             console.log(err);
-            addAlert($('body'),
-                '<div class="alert alert-danger" role="alert">\n' +
-                '  Что-то пошло не так!' +
-                '</div>'
-            );
+            addAlert('#alert');
         }, {'Accept': 'application/json', 'Content-Type': 'application/json'});
 
 }
