@@ -100,18 +100,10 @@ function savePayment(address, paymentType, event) {
 
     sendPostRequest(address, formData,
         function (res) {
-            addAlert($('body'),
-                '<div class="alert alert-success" role="alert">\n' +
-                '  Оплата прошла успешно' +
-                '</div>'
-            );
+            addAlert('#alert-success');
             console.log(res);
         }, function (error) {
-            addAlert($('body'),
-                '<div class="alert alert-danger" role="alert">\n' +
-                '  Что-то пошло не так!' +
-                '</div>'
-            );
+            addAlert('#alert-dangerous');
             console.log(error);
         }, {'Accept': 'application/json', 'Content-Type': 'application/json'});
 }

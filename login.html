@@ -29,6 +29,23 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Внимание!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert">
+                    Что-то не пошло так!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -40,8 +57,6 @@
         crossorigin="anonymous"></script>
 <script src="core.js"></script>
 <script>
-    let errorAlert = $('#wrong-credentials-alert');
-
     $('#submit-button').click(function (event) {
         sendPostRequest('http://localhost:8080/login',
             new FormData(document.forms.login),
@@ -49,11 +64,7 @@
                 window.location.replace('client.html');
             },
             function () {
-                addAlert($('body'),
-                    '<div class="alert alert-danger" role="alert">\n' +
-                    '  Что-то пошло не так!' +
-                    '</div>'
-                );
+                addAlert('#alert');
             }
         );
 
